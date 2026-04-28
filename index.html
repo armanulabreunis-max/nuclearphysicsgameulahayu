@@ -3,58 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UFAGS - Çekirdek Simülatörü</title>
+    <title>UFAGS Çekirdek Simülatörü</title>
     <style>
-        :root {
-            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --color-border-secondary: #ccc;
-            --color-border-tertiary: #eee;
-            --color-background-primary: #fff;
-            --color-background-secondary: #f9f9f9;
-            --color-text-primary: #333;
-            --color-text-secondary: #666;
-            --color-text-tertiary: #999;
-            --border-radius-md: 6px;
+        /* CSS Reset ve Genel Stil */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background-color: #f0f2f5; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
+            padding: 20px;
         }
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:var(--font-sans);background:#f0f2f5; color: var(--color-text-primary); display: flex; justify-content: center; align-items: center; min-height: 100vh;}
-        #app{display:flex;flex-direction:column; width: 100%; max-width: 800px; height: 640px; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid var(--color-border-tertiary)}
-        #ctrl{display:flex;gap:7px;padding:11px 13px;border-bottom:0.5px solid var(--color-border-tertiary);flex-wrap:wrap;align-items:center; background: var(--color-background-secondary)}
-        .btn{padding:6px 13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--color-text-primary);transition:all .12s}
-        .btn:hover{background:var(--color-background-secondary); border-color: #999}
-        .lang-select{padding:5px; border-radius:4px; font-size:11px; border:1px solid #ccc; cursor:pointer}
-        .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
-        .dp{background:#378ADD}.dn{background:#639922}
-        .breset{margin-left:auto;font-size:11px;color:var(--color-text-secondary)}
-        #infobar{padding:8px 13px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:42px}
-        .pill{font-size:11px;font-weight:500;padding:2px 9px;border-radius:99px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);color:var(--color-text-primary)}
-        .bs{font-size:11px;font-weight:500;padding:2px 9px;border-radius:99px;background:#EAF3DE;color:#3B6D11}
-        .bu{font-size:11px;font-weight:500;padding:2px 9px;border-radius:99px;background:#FCEBEB;color:#A32D2D}
-        .br{font-size:11px;font-weight:500;padding:2px 9px;border-radius:99px;background:#FAEEDA;color:#854F0B}
-        #decaybar{padding:7px 13px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-height:40px}
-        .dbtn{padding:5px 12px;border-radius:99px;border:0.5px solid;font-size:11px;font-weight:500;cursor:pointer;transition:filter .12s}
-        .dbtn:hover{filter:brightness(0.9)}
-        .da{background:#FAECE7;color:#712B13;border-color:#F0997B}
-        .db{background:#E6F1FB;color:#0C447C;border-color:#85B7EB}
-        .dbp{background:#FAEEDA;color:#633806;border-color:#EF9F27}
-        .dec{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
-        .dg{background:#F1EFE8;color:#444441;border-color:#B4B2A9}
-        .dsf{background:#FCEBEB;color:#791F1F;border-color:#F09595}
-        #cvwrap{flex:1;position:relative;overflow:hidden;min-height:350px; background: #fafafa}
-        canvas{display:block;width:100%;height:100%}
-        #empty{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--color-text-tertiary);font-size:13px;pointer-events:none;text-align:center;line-height:1.8}
-        #logbar{padding:7px 13px;border-top:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-secondary);min-height:27px; background: #fff}
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1000px;
+            height: 700px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Kontrol Paneli */
+        #ctrl {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #f9fafb;
+        }
+
+        .btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #374151;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #f3f4f6; border-color: #9ca3af; }
+
+        .lang-sel {
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .dp { background: #3b82f6; } /* Proton - Mavi */
+        .dn { background: #22c55e; } /* Nötron - Yeşil */
+        
+        .breset { margin-left: auto; color: #6b7280; border: none; background: transparent; }
+        .breset:hover { color: #ef4444; background: transparent; }
+
+        /* Bilgi Çubukları */
+        #infobar {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 45px;
+            background: #ffffff;
+        }
+
+        .pill { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; border: 1px solid #e5e7eb; background: #f3f4f6; color: #1f2937; }
+        .bs { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: #dcfce7; color: #166534; } /* Kararlı */
+        .bu { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: #fee2e2; color: #991b1b; } /* Kararsız */
+        .br { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: #fef3c7; color: #92400e; } /* Radyoaktif */
+
+        #decaybar {
+            padding: 8px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            min-height: 42px;
+            background: #fdfdfd;
+        }
+
+        .dbtn {
+            padding: 5px 12px;
+            border-radius: 99px;
+            border: 1px solid;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .dbtn:active { transform: scale(0.95); }
+
+        .da { background: #fff7ed; color: #9a3412; border-color: #fdba74; }
+        .db { background: #eff6ff; color: #1e40af; border-color: #93c5fd; }
+        .dbp { background: #fffbeb; color: #92400e; border-color: #fcd34d; }
+        .dec { background: #f5f3ff; color: #5b21b6; border-color: #ddd6fe; }
+        .dg { background: #f9fafb; color: #4b5563; border-color: #d1d5db; }
+        .dsf { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+
+        /* Canvas Alanı */
+        #cvwrap { flex: 1; position: relative; overflow: hidden; background: #f8fafc; }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        #empty {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #9ca3af;
+            font-size: 14px;
+            pointer-events: none;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        #logbar {
+            padding: 8px 15px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            min-height: 30px;
+            background: #ffffff;
+        }
     </style>
 </head>
 <body>
 
 <div id="app">
   <div id="ctrl">
-    <select class="lang-select" onchange="setLang(this.value)">
-        <option value="tr">TR</option>
-        <option value="de">DE</option>
-        <option value="en">EN</option>
-        
+    <select class="lang-sel" onchange="setLang(this.value)">
+      <option value="tr">TR</option>
+      <option value="de">DE</option>
+      <option value="en">EN</option>
     </select>
     <button class="btn" onclick="addP('proton')" id="btnP"><span class="dot dp"></span>Proton ekle</button>
     <button class="btn" onclick="addP('neutron')" id="btnN"><span class="dot dn"></span>Nötron ekle</button>
@@ -72,243 +171,250 @@
 </div>
 
 <script>
-// --- Dil Ayarları ---
-const DICTIONARY = {
-    tr: {
-        addP: "Proton ekle", addN: "Nötron ekle", remP: "− Proton", remN: "− Nötron", reset: "Sıfırla",
-        empty: "Çekirdek burada görünecek<br><span style='font-size:11px'>p = proton (mavi) · n = nötron (yeşil)</span>",
-        startInfo: "Proton veya nötron ekleyin", stable: "Kararlı", unstable: "Kararsız", radioactive: "Radyoaktif",
-        modes: { alpha: "α bozunması", "beta-": "β⁻ bozunması", "beta+": "β⁺ bozunması", ec: "Elektron yakl.", gamma: "γ bozunması", sf: "Fisyon" },
-        whys: {
-            noP: "Proton yok — element oluşmuyor",
-            unknown: "Bilinmeyen element (Z > 118)",
-            radioactiveAll: "Tüm izotopları radyoaktif",
-            actinide: "Aktinit — ağır radyoaktif",
-            natural: "Z ≥ 84 — doğal radyoaktif",
-            longLived: "Çok uzun ömürlü radyoaktif",
-            stableIso: "Gerçek kararlı izotop",
-            nExcess: "Nötron fazlası",
-            pExcess: "Proton fazlası",
-            gap: "N bandındaki boşluk",
-            noStable: "Kararlı izotop yok"
-        }
-    },
-    de: {
-        addP: "Proton hinzufügen", addN: "Neutron hinzufügen", remP: "− Proton", remN: "− Neutron", reset: "Zurücksetzen",
-        empty: "Kern wird hier erscheinen<br><span style='font-size:11px'>p = Proton (blau) · n = Neutron (grün)</span>",
-        startInfo: "Fügen Sie Protonen oder Neutronen hinzu", stable: "Stabil", unstable: "Instabil", radioactive: "Radioaktiv",
-        modes: { alpha: "α-Zerfall", "beta-": "β⁻-Zerfall", "beta+": "β⁺-Zerfall", ec: "E-Einfang", gamma: "γ-Zerfall", sf: "Fission" },
-        whys: {
-            noP: "Kein Proton — kein Element",
-            unknown: "Unbekanntes Element (Z > 118)",
-            radioactiveAll: "Alle Isotope sind radioaktiv",
-            actinide: "Aktinid — schwer radioaktiv",
-            natural: "Z ≥ 84 — natürlich radioaktiv",
-            longLived: "Sehr langlebig radioaktiv",
-            stableIso: "Stabiles Isotop",
-            nExcess: "Neutronenüberschuss",
-            pExcess: "Protonenüberschuss",
-            gap: "Lücke im N-Band",
-            noStable: "Kein stabiles Isotop"
-        }
-    },
-    en: {
-        addP: "Add a proton", addN: "Add a neutron", remP: "− Proton", remN: "− Neutron", reset: "Reset",
-        empty: "Kern wird hier erscheinen<br><span style='font-size:11px'>p = Proton (blau) · n = Neutron (grün)</span>",
-        startInfo: "Add a proton or a neutron", stable: "Stable", unstable: "Unstable", radioactive: "Radioactive",
-        modes: { alpha: "α-decay", "beta-": "β⁻-decay", "beta+": "β⁺-decay", ec: "E-catch", gamma: "γ-decay", sf: "Fission" },
-        whys: {
-            noP: "No Proton — No Element",
-            unknown: "Unknown Element (Z > 118)",
-            radioactiveAll: "All isotopes are radioactive",
-            actinide: "Actinide — heavily radioactive",
-            natural: "Z ≥ 84 — naturally radioactive",
-            longLived: "The radioactive isotope that lives long",
-            stableIso: "Stable Isotope",
-            nExcess: "Neutron excess",
-            pExcess: "Proton excess",
-            gap: "Gap in N tape",
-            noStable: "Unstable Isotope"
-        }
-    }
+const DICT = {
+  tr:{
+    addP:"Proton ekle",addN:"Nötron ekle",remP:"− Proton",remN:"− Nötron",reset:"Sıfırla",
+    empty:"Çekirdek burada görünecek<br><span style='font-size:11px'>p = proton (mavi) · n = nötron (yeşil)</span>",
+    startInfo:"Proton veya nötron ekleyin",stable:"Kararlı",unstable:"Kararsız",radioactive:"Radyoaktif",
+    modes:{alpha:"α bozunması","beta-":"β⁻ bozunması","beta+":"β⁺ bozunması",ec:"Elektron yakalaması",gamma:"γ bozunması",sf:"Spontan fisyon"},
+    whys:{noP:"Proton yok — element oluşmuyor",unknown:"Bilinmeyen element (Z > 118)",radioactiveAll:"Tüm izotopları radyoaktif",actinide:"Aktinit — ağır radyoaktif element",natural:"Z ≥ 84 — doğal radyoaktif",longLived:"Çok uzun ömürlü radyoaktif izotop",stableIso:"Gerçek kararlı izotop",nExcess:"Nötron fazlası → β⁻ bozunması beklenir",pExcess:"Proton fazlası → β⁺/EC bozunması beklenir",gap:"Kararlı bant dışında",noStable:"Kararlı izotopu bulunmayan element"}
+  },
+  de:{
+    addP:"Proton hinzufügen",addN:"Neutron hinzufügen",remP:"− Proton",remN:"− Neutron",reset:"Zurücksetzen",
+    empty:"Kern erscheint hier<br><span style='font-size:11px'>p = Proton (blau) · n = Neutron (grün)</span>",
+    startInfo:"Proton oder Neutron hinzufügen",stable:"Stabil",unstable:"Instabil",radioactive:"Radioaktiv",
+    modes:{alpha:"α-Zerfall","beta-":"β⁻-Zerfall","beta+":"β⁺-Zerfall",ec:"Elektroneneinfang",gamma:"γ-Zerfall",sf:"Spontanspaltung"},
+    whys:{noP:"Kein Proton — kein Element",unknown:"Unbekanntes Element (Z > 118)",radioactiveAll:"Alle Isotope radioaktiv",actinide:"Actinid — stark radioaktiv",natural:"Z ≥ 84 — natürlich radioaktiv",longLived:"Sehr langlebig radioaktiv",stableIso:"Stabiles Isotop",nExcess:"Neutronenüberschuss → β⁻-Zerfall erwartet",pExcess:"Protonenüberschuss → β⁺/EC erwartet",gap:"Außerhalb des stabilen Bandes",noStable:"Kein stabiles Isotop"}
+  },
+  en:{
+    addP:"Add proton",addN:"Add neutron",remP:"− Proton",remN:"− Neutron",reset:"Reset",
+    empty:"Nucleus will appear here<br><span style='font-size:11px'>p = proton (blue) · n = neutron (green)</span>",
+    startInfo:"Add a proton or neutron",stable:"Stable",unstable:"Unstable",radioactive:"Radioactive",
+    modes:{alpha:"α decay","beta-":"β⁻ decay","beta+":"β⁺ decay",ec:"Electron capture",gamma:"γ decay",sf:"Spontaneous fission"},
+    whys:{noP:"No proton — no element",unknown:"Unknown element (Z > 118)",radioactiveAll:"All isotopes radioactive",actinide:"Actinide — heavily radioactive",natural:"Z ≥ 84 — naturally radioactive",longLived:"Very long-lived radioactive isotope",stableIso:"Genuinely stable isotope",nExcess:"Neutron excess → β⁻ decay expected",pExcess:"Proton excess → β⁺/EC decay expected",gap:"Outside stable N band",noStable:"No stable isotope exists"}
+  }
 };
 
-let L = 'tr';
+let L='tr';
 
-function setLang(lang) {
-    L = lang;
-    const d = DICTIONARY[L];
-    document.getElementById('btnP').innerHTML = `<span class="dot dp"></span>${d.addP}`;
-    document.getElementById('btnN').innerHTML = `<span class="dot dn"></span>${d.addN}`;
-    document.getElementById('btnRP').innerText = d.remP;
-    document.getElementById('btnRN').innerText = d.remN;
-    document.getElementById('btnRes').innerText = d.reset;
-    document.getElementById('empty').innerHTML = d.empty;
-    updateUI();
-}
+const EL=[null,
+  {n:"Hydrogen",s:"H"},{n:"Helium",s:"He"},{n:"Lithium",s:"Li"},{n:"Beryllium",s:"Be"},
+  {n:"Boron",s:"B"},{n:"Carbon",s:"C"},{n:"Nitrogen",s:"N"},{n:"Oxygen",s:"O"},
+  {n:"Fluorine",s:"F"},{n:"Neon",s:"Ne"},{n:"Sodium",s:"Na"},{n:"Magnesium",s:"Mg"},
+  {n:"Aluminium",s:"Al"},{n:"Silicon",s:"Si"},{n:"Phosphorus",s:"P"},{n:"Sulfur",s:"S"},
+  {n:"Chlorine",s:"Cl"},{n:"Argon",s:"Ar"},{n:"Potassium",s:"K"},{n:"Calcium",s:"Ca"},
+  {n:"Scandium",s:"Sc"},{n:"Titanium",s:"Ti"},{n:"Vanadium",s:"V"},{n:"Chromium",s:"Cr"},
+  {n:"Manganese",s:"Mn"},{n:"Iron",s:"Fe"},{n:"Cobalt",s:"Co"},{n:"Nickel",s:"Ni"},
+  {n:"Copper",s:"Cu"},{n:"Zinc",s:"Zn"},{n:"Gallium",s:"Ga"},{n:"Germanium",s:"Ge"},
+  {n:"Arsenic",s:"As"},{n:"Selenium",s:"Se"},{n:"Bromine",s:"Br"},{n:"Krypton",s:"Kr"},
+  {n:"Rubidium",s:"Rb"},{n:"Strontium",s:"Sr"},{n:"Yttrium",s:"Y"},{n:"Zirconium",s:"Zr"},
+  {n:"Niobium",s:"Nb"},{n:"Molybdenum",s:"Mo"},{n:"Technetium",s:"Tc"},{n:"Ruthenium",s:"Ru"},
+  {n:"Rhodium",s:"Rh"},{n:"Palladium",s:"Pd"},{n:"Silver",s:"Ag"},{n:"Cadmium",s:"Cd"},
+  {n:"Indium",s:"In"},{n:"Tin",s:"Sn"},{n:"Antimony",s:"Sb"},{n:"Tellurium",s:"Te"},
+  {n:"Iodine",s:"I"},{n:"Xenon",s:"Xe"},{n:"Caesium",s:"Cs"},{n:"Barium",s:"Ba"},
+  {n:"Lanthanum",s:"La"},{n:"Cerium",s:"Ce"},{n:"Praseodymium",s:"Pr"},{n:"Neodymium",s:"Nd"},
+  {n:"Promethium",s:"Pm"},{n:"Samarium",s:"Sm"},{n:"Europium",s:"Eu"},{n:"Gadolinium",s:"Gd"},
+  {n:"Terbium",s:"Tb"},{n:"Dysprosium",s:"Dy"},{n:"Holmium",s:"Ho"},{n:"Erbium",s:"Er"},
+  {n:"Thulium",s:"Tm"},{n:"Ytterbium",s:"Yb"},{n:"Lutetium",s:"Lu"},{n:"Hafnium",s:"Hf"},
+  {n:"Tantalum",s:"Ta"},{n:"Tungsten",s:"W"},{n:"Rhenium",s:"Re"},{n:"Osmium",s:"Os"},
+  {n:"Iridium",s:"Ir"},{n:"Platinum",s:"Pt"},{n:"Gold",s:"Au"},{n:"Mercury",s:"Hg"},
+  {n:"Thallium",s:"Tl"},{n:"Lead",s:"Pb"},{n:"Bismuth",s:"Bi"},{n:"Polonium",s:"Po"},
+  {n:"Astatine",s:"At"},{n:"Radon",s:"Rn"},{n:"Francium",s:"Fr"},{n:"Radium",s:"Ra"},
+  {n:"Actinium",s:"Ac"},{n:"Thorium",s:"Th"},{n:"Protactinium",s:"Pa"},{n:"Uranium",s:"U"},
+  {n:"Neptunium",s:"Np"},{n:"Plutonium",s:"Pu"},{n:"Americium",s:"Am"},{n:"Curium",s:"Cm"},
+  {n:"Berkelium",s:"Bk"},{n:"Californium",s:"Cf"},{n:"Einsteinium",s:"Es"},{n:"Fermium",s:"Fm"},
+  {n:"Mendelevium",s:"Md"},{n:"Nobelium",s:"No"},{n:"Lawrencium",s:"Lr"},{n:"Rutherfordium",s:"Rf"},
+  {n:"Dubnium",s:"Db"},{n:"Seaborgium",s:"Sg"},{n:"Bohrium",s:"Bh"},{n:"Hassium",s:"Hs"},
+  {n:"Meitnerium",s:"Mt"},{n:"Darmstadtium",s:"Ds"},{n:"Roentgenium",s:"Rg"},{n:"Copernicium",s:"Cn"},
+  {n:"Nihonium",s:"Nh"},{n:"Flerovium",s:"Fl"},{n:"Moscovium",s:"Mc"},{n:"Livermorium",s:"Lv"},
+  {n:"Tennessine",s:"Ts"},{n:"Oganesson",s:"Og"}
+];
 
-// Orijinal Veriler
-const EL=[null,{n:"Hydrogen",s:"H"},{n:"Helium",s:"He"},{n:"Lithium",s:"Li"},{n:"Beryllium",s:"Be"},{n:"Boron",s:"B"},{n:"Carbon",s:"C"},{n:"Nitrogen",s:"N"},{n:"Oxygen",s:"O"},{n:"Fluorine",s:"F"},{n:"Neon",s:"Ne"},{n:"Sodium",s:"Na"},{n:"Magnesium",s:"Mg"},{n:"Aluminium",s:"Al"},{n:"Silicon",s:"Si"},{n:"Phosphorus",s:"P"},{n:"Sulfur",s:"S"},{n:"Klor",s:"Cl"},{n:"Argon",s:"Ar"},{n:"Potasyum",s:"K"},{n:"Kalsiyum",s:"Ca"},{n:"Skandiyum",s:"Sc"},{n:"Titanyum",s:"Ti"},{n:"Vanadyum",s:"V"},{n:"Krom",s:"Cr"},{n:"Mangan",s:"Mn"},{n:"Demir",s:"Fe"},{n:"Kobalt",s:"Co"},{n:"Nikel",s:"Ni"},{n:"Bakır",s:"Cu"},{n:"Çinko",s:"Zn"},{n:"Galyum",s:"Ga"},{n:"Germanyum",s:"Ge"},{n:"Arsenik",s:"As"},{n:"Selenyum",s:"Se"},{n:"Brom",s:"Br"},{n:"Kripton",s:"Kr"},{n:"Rubidyum",s:"Rb"},{n:"Stronsiyum",s:"Sr"},{n:"İtriyum",s:"Y"},{n:"Zirkonyum",s:"Zr"},{n:"Niyobyum",s:"Nb"},{n:"Molibden",s:"Mo"},{n:"Teknesyum",s:"Tc"},{n:"Rutenyum",s:"Ru"},{n:"Rodyum",s:"Rh"},{n:"Paladyum",s:"Pd"},{n:"Gümüş",s:"Ag"},{n:"Kadmiyum",s:"Cd"},{n:"İndiyum",s:"In"},{n:"Kalay",s:"Sn"},{n:"Antimon",s:"Sb"},{n:"Tellür",s:"Te"},{n:"İyot",s:"I"},{n:"Ksenon",s:"Xe"},{n:"Sezyum",s:"Cs"},{n:"Baryum",s:"Ba"},{n:"Lantan",s:"La"},{n:"Seryum",s:"Ce"},{n:"Praseodimyum",s:"Pr"},{n:"Neodimyum",s:"Nd"},{n:"Prometyum",s:"Pm"},{n:"Samaryum",s:"Sm"},{n:"Ötropiyum",s:"Eu"},{n:"Gadolinyum",s:"Gd"},{n:"Terbiyum",s:"Tb"},{n:"Disprosyum",s:"Dy"},{n:"Holmiyum",s:"Ho"},{n:"Erbiyum",s:"Er"},{n:"Tulyum",s:"Tm"},{n:"İterbiyum",s:"Yb"},{n:"Lutesyum",s:"Lu"},{n:"Hafniyum",s:"Hf"},{n:"Tantal",s:"Ta"},{n:"Wolfram",s:"W"},{n:"Renyum",s:"Re"},{n:"Osmiyum",s:"Os"},{n:"İridyum",s:"Ir"},{n:"Platin",s:"Pt"},{n:"Altın",s:"Au"},{n:"Cıva",s:"Hg"},{n:"Talyum",s:"Tl"},{n:"Kurşun",s:"Pb"},{n:"Bizmut",s:"Bi"},{n:"Polonyum",s:"Po"},{n:"Astatin",s:"At"},{n:"Radon",s:"Rn"},{n:"Fransiyum",s:"Fr"},{n:"Radyum",s:"Ra"},{n:"Aktinyum",s:"Ac"},{n:"Toryum",s:"Th"},{n:"Protaktinyum",s:"Pa"},{n:"Uranyum",s:"U"},{n:"Neptünyum",s:"Np"},{n:"Plütonyum",s:"Pu"},{n:"Amerisyum",s:"Am"},{n:"Küryum",s:"Cm"},{n:"Berklyum",s:"Bk"},{n:"Kaliforniyum",s:"Cf"},{n:"Einstaynyum",s:"Es"},{n:"Fermiyum",s:"Fm"},{n:"Mendelevyum",s:"Md"},{n:"Nobelyum",s:"No"},{n:"Lavrensiyum",s:"Lr"},{n:"Raderfordyum",s:"Rf"},{n:"Dubniyum",s:"Db"},{n:"Seaborgiyum",s:"Sg"},{n:"Boryum",s:"Bh"},{n:"Hassiyum",s:"Hs"},{n:"Meitneryum",s:"Mt"},{n:"Darmstadtyum",s:"Ds"},{n:"Röntgenyum",s:"Rg"},{n:"Kopernikyum",s:"Cn"},{n:"Nihonyum",s:"Nh"},{n:"Flerodyum",s:"Fl"},{n:"Moskovyum",s:"Mc"},{n:"Livermoryum",s:"Lv"},{n:"Tennessin",s:"Ts"},{n:"Oganesson",s:"Og"}];
-const STABLE_N = { 1:[0,1],2:[1,2],3:[3,4],4:[5],5:[5,6],6:[6,7],7:[7,8],8:[8,9,10],9:[10],10:[10,11,12],11:[12],12:[12,13,14],13:[14],14:[14,15,16],15:[16],16:[16,17,18,20],17:[18,20],18:[18,20,22],19:[20,22],20:[20,22,23,24,26,28],21:[24],22:[24,25,26,27,28],23:[28],24:[26,28,29,30,32],25:[30],26:[28,30,31,32],27:[32],28:[30,32,33,34,36],29:[34,36],30:[34,36,37,38,40],31:[38,40],32:[38,40,41,42,44],33:[42],34:[40,42,43,44,46],35:[44,46],36:[42,44,46,47,48,50],37:[48,50],38:[46,48,49,50,52],39:[50],40:[50,51,52,54],41:[52],42:[50,52,53,54,56,58],43:[],44:[52,54,55,56,57,58,60],45:[58],46:[56,58,59,60,62,64],47:[60,62],48:[58,62,63,64,66,68],49:[64,66],50:[62,64,65,66,68,69,70,72],51:[70,72],52:[68,70,71,72,74,76],53:[74],54:[70,72,74,75,76,78,80],55:[78],56:[74,76,78,79,80,82],57:[82],58:[78,80,82,84],59:[82],60:[82,83,84,86],61:[],62:[82,85,86,88,90],63:[88,90],64:[88,90,91,92,94,96],65:[94],66:[90,92,93,94,96,97,98],67:[98],68:[94,96,98,99,100,102],69:[100],70:[98,100,101,102,103,104],71:[104,105],72:[102,104,105,106,108],73:[108,110],74:[106,108,109,110,112],75:[110,112],76:[108,110,111,112,114,116],77:[114,116],78:[112,114,116,117,118,120],79:[118],80:[116,118,119,120,121,122],81:[122,124],82:[120,122,124,125,126],83:[126] };
-const SPECIAL = { "19-21":["beta-","beta+","ec"], "37-50":["beta-"], "49-66":["beta-"], "52-76":["beta-"], "54-82":["beta-"], "56-74":["beta-"], "56-76":["beta-"], "60-84":["alpha"], "62-88":["alpha"], "62-90":["alpha"], "71-105":["beta-"], "74-106":["alpha"], "75-112":["beta-"], "76-108":["alpha"], "78-112":["alpha"], "83-126":["alpha"] };
+const STABLE_N = {
+  1:[0,1], 2:[1,2], 3:[3,4], 4:[5], 5:[5,6], 6:[6,7], 7:[7,8], 8:[8,9,10], 9:[10], 10:[10,11,12],
+  11:[12], 12:[12,13,14], 13:[14], 14:[14,15,16], 15:[16], 16:[16,17,18,20], 17:[18,20], 18:[18,20,22], 19:[20,22], 20:[20,22,23,24,26,28],
+  21:[24], 22:[24,25,26,27,28], 23:[28], 24:[26,28,29,30,32], 25:[30], 26:[28,30,31,32], 27:[32], 28:[30,32,33,34,36], 29:[34,36], 30:[34,36,37,38,40],
+  31:[38,40], 32:[38,40,41,42,44], 33:[42], 34:[40,42,43,44,46], 35:[44,46], 36:[42,44,46,47,48,50], 37:[48,50], 38:[46,48,49,50], 39:[50], 40:[50,51,52,54],
+  41:[52], 42:[50,52,53,54,56,58], 43:[], 44:[52,54,55,56,57,58,60], 45:[58], 46:[56,58,59,60,62,64], 47:[60,62], 48:[58,62,63,64,66,68], 49:[64,66], 50:[62,64,65,66,68,69,70,72,74],
+  51:[70,72], 52:[68,70,71,72,74,76], 53:[74], 54:[70,72,74,75,76,78,80], 55:[78], 56:[74,76,78,79,80,82], 57:[82], 58:[78,80,82,84], 59:[82], 60:[82,83,84,86],
+  61:[], 62:[82,85,86,88,90], 63:[88,90], 64:[88,90,91,92,94,96], 65:[94], 66:[90,92,94,95,96,97,98], 67:[98], 68:[94,96,98,99,100,102], 69:[100], 70:[98,100,101,102,103,104,106],
+  71:[104,105], 72:[102,104,105,106,108], 73:[108], 74:[106,108,109,110,112], 75:[110,112], 76:[108,110,111,112,114,116], 77:[114,116], 78:[112,114,116,117,118,120], 79:[118], 80:[116,118,119,120,121,122,124],
+  81:[122,124], 82:[124,125,126], 83:[126]
+};
+
+const LONG_LIVED_RADIO = new Set(["19-21","37-50","71-105","75-112","83-126"]);
 
 function getDecayModes(Z, N) {
-  if (Z === 0) return [];
-  const key = Z+"-"+N;
-  if (SPECIAL[key]) return SPECIAL[key];
-  if (Z >= 84) {
-    if (Z >= 92) return ["alpha","sf"];
-    if (Z >= 89) return ["alpha","beta-"];
+  if (Z===0) return [];
+  if (Z>118) return ["beta-"];
+  if (Z>=84) {
+    if (Z>=92) return ["alpha","sf"];
+    if (Z>=89) return ["alpha","beta-"];
     return ["alpha"];
   }
-  const ratio = N / Z;
-  if (Z === 43 || Z === 61) {
-    if (ratio < 1.1) return ["beta+","ec"];
-    if (ratio > 1.4) return ["beta-"];
-    return ["beta-","beta+"];
-  }
-  const sns = STABLE_N[Z] || [];
-  if (sns.length === 0) return (ratio < 1.2) ? ["beta+","ec"] : ["beta-"];
-  const minN = Math.min(...sns), maxN = Math.max(...sns);
-  if (N > maxN) return (Z >= 60 && N - maxN >= 3) ? ["beta-","alpha"] : ["beta-"];
-  if (N < minN) return (Z <= 10) ? ["beta+"] : (Z <= 30) ? ["beta+","ec"] : ["ec","beta+"];
-  return ["beta-","beta+"];
+  const sns=STABLE_N[Z]||[];
+  if (sns.length===0) return (N/Math.max(Z,1) < 1.1) ? ["beta+","ec"] : ["beta-"];
+  const minN=Math.min(...sns), maxN=Math.max(...sns);
+  if (N>maxN) return (Z>=50&&N-maxN>=4)?["beta-","alpha"]:["beta-"];
+  if (N<minN) return (Z<=10)?["beta+"]:(Z<=30)?["beta+","ec"]:["ec","beta+"];
+  return (N/Math.max(Z,1) >= 1) ? ["beta-"] : ["beta+","ec"];
 }
 
 function getStability(Z, N) {
-  const d = DICTIONARY[L].whys;
-  if (Z === 0 && N === 0) return null;
-  if (Z === 0) return {st:"unstable", why: d.noP, modes:[]};
-  if (Z > 118) return {st:"unstable", why: d.unknown, modes:["beta-"]};
-  const sns = STABLE_N[Z];
-  if (sns !== undefined && sns.length === 0) return {st:"radioactive", why: d.radioactiveAll, modes: getDecayModes(Z,N)};
-  if (Z >= 84) return {st:"radioactive", why: Z >= 92 ? d.actinide : d.natural, modes: getDecayModes(Z,N)};
-  if (sns && sns.includes(N)) {
-    const longLived = SPECIAL[Z+"-"+N];
-    return longLived ? {st:"radioactive", why: d.longLived, modes: longLived} : {st:"stable", why: d.stableIso, modes:[]};
-  }
-  const modes = getDecayModes(Z, N), sns2 = sns || [];
-  let why = "";
-  if (sns2.length > 0) {
-    const maxN = Math.max(...sns2), minN = Math.min(...sns2);
-    if (N > maxN) why = d.nExcess;
-    else if (N < minN) why = d.pExcess;
-    else why = d.gap;
-  } else why = d.noStable;
-  return {st:"unstable", why, modes};
+  const d=DICT[L].whys;
+  if (Z===0&&N===0) return null;
+  if (Z===0) return {st:"unstable",why:d.noP,modes:[]};
+  if (Z>118) return {st:"unstable",why:d.unknown,modes:["beta-"]};
+  const sns=STABLE_N[Z];
+  if (sns!==undefined&&sns.length===0) return {st:"radioactive",why:d.radioactiveAll,modes:getDecayModes(Z,N)};
+  if (Z>=84) return {st:"radioactive",why:Z>=92?d.actinide:d.natural,modes:getDecayModes(Z,N)};
+  const key=Z+"-"+N;
+  if (LONG_LIVED_RADIO.has(key)) return {st:"radioactive",why:d.longLived,modes:getDecayModes(Z,N)};
+  if (sns&&sns.includes(N)) return {st:"stable",why:d.stableIso,modes:[]};
+  const modes=getDecayModes(Z,N), sns2=sns||[];
+  let why= sns2.length>0 ? (N>Math.max(...sns2)?d.nExcess:(N<Math.min(...sns2)?d.pExcess:d.gap)) : d.noStable;
+  return {st:"unstable",why,modes};
 }
 
-let protons=[], neutrons=[], ejected=[], raf;
-const cv = document.getElementById('cv'), ctx2 = cv.getContext('2d'), cvwrap = document.getElementById('cvwrap');
-function resize() { cv.width=cvwrap.clientWidth; cv.height=cvwrap.clientHeight; draw(); }
+let protons=[],neutrons=[],ejected=[],raf;
+const cv=document.getElementById('cv'),ctx2=cv.getContext('2d'),cvwrap=document.getElementById('cvwrap');
+
+function resize(){cv.width=cvwrap.clientWidth;cv.height=cvwrap.clientHeight;draw();}
 new ResizeObserver(resize).observe(cvwrap);
-function nucR() { return Math.max(14, Math.min(95, 8 + Math.cbrt(protons.length+neutrons.length)*10)); }
 
-function findPos(cx, cy, r) {
-  const all = [...protons,...neutrons];
-  for (let t=0; t<500; t++) {
-    const a=Math.random()*Math.PI*2, d=Math.random()*r, x=cx+Math.cos(a)*d, y=cy+Math.sin(a)*d;
-    if (all.every(p=>Math.hypot(p.x-x,p.y-y)>14.2)) return {x,y};
+function nucR(){return Math.max(14,Math.min(95,8+Math.cbrt(protons.length+neutrons.length)*10));}
+
+function findPos(cx,cy,r){
+  const all=[...protons,...neutrons];
+  for(let t=0;t<500;t++){
+    const a=Math.random()*Math.PI*2,d=Math.random()*r,x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d;
+    if(all.every(p=>Math.hypot(p.x-x,p.y-y)>14.2)) return {x,y};
   }
-  const a=Math.random()*Math.PI*2; return {x:cx+Math.cos(a)*r*0.6, y:cy+Math.sin(a)*r*0.6};
+  const a=Math.random()*Math.PI*2;return{x:cx+Math.cos(a)*r*0.6,y:cy+Math.sin(a)*r*0.6};
 }
 
-function addP(type) {
-  const cx=cv.width/2, cy=cv.height/2, pos=findPos(cx,cy,nucR()+5);
+function addP(type){
+  const cx=cv.width/2,cy=cv.height/2,pos=findPos(cx,cy,nucR()+5);
   const p={x:pos.x,y:pos.y,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,type};
   if(type==='proton') protons.push(p); else neutrons.push(p);
   document.getElementById('empty').style.display='none';
-  updateUI(); cancelAnimationFrame(raf); animate();
+  updateUI();cancelAnimationFrame(raf);animate();
 }
 
-function remP(type) {
-  if(type==='proton'&&protons.length>0) protons.pop(); else if(type==='neutron'&&neutrons.length>0) neutrons.pop();
+function remP(type){
+  if(type==='proton'&&protons.length>0) protons.pop();
+  else if(type==='neutron'&&neutrons.length>0) neutrons.pop();
   if(!protons.length&&!neutrons.length) document.getElementById('empty').style.display='';
   updateUI();
 }
 
-function doReset() { protons=[]; neutrons=[]; ejected=[]; document.getElementById('empty').style.display=''; document.getElementById('logbar').textContent=''; updateUI(); draw(); }
-function elLabel(Z,N) { const e=Z>=1&&Z<=118?EL[Z]:null; return e?`${e.s}-${Z+N}`:`Z${Z}-${Z+N}`; }
+function doReset(){
+  protons=[];neutrons=[];ejected=[];
+  document.getElementById('empty').style.display='';
+  document.getElementById('logbar').textContent='';
+  updateUI();draw();
+}
 
-function doDecay(mode) {
-  const Z=protons.length, N=neutrons.length; if(Z===0) return;
-  const cx=cv.width/2, cy=cv.height/2, ang=Math.random()*Math.PI*2, spd=3.8, before=elLabel(Z,N);
-  if(mode==='alpha') {
+function elLabel(Z,N){const e=Z>=1&&Z<=118?EL[Z]:null;return e?`${e.s}-${Z+N}`:`Z${Z}-${Z+N}`;}
+
+function doDecay(mode){
+  const Z=protons.length,N=neutrons.length;if(Z===0) return;
+  const cx=cv.width/2,cy=cv.height/2,ang=Math.random()*Math.PI*2,spd=3.8;
+  const before=elLabel(Z,N);
+  if(mode==='alpha'){
     if(Z<2||N<2) return;
     const grp=[protons.pop(),protons.pop(),neutrons.pop(),neutrons.pop()];
-    ejected.push({type:'alpha',label:'α',particles:grp,cx:cx,cy:cy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:1.0,trail:[]});
-  } else if(mode==='beta-') {
-    const np=neutrons.pop(); np.type='proton'; protons.push(np);
-    const ex=cx+Math.cos(ang)*(nucR()+5), ey=cy+Math.sin(ang)*(nucR()+5);
-    ejected.push({type:'electron',label:'e⁻',particles:[{x:ex,y:ey}],cx:ex,cy:ey,vx:Math.cos(ang)*spd*2,vy:Math.sin(ang)*spd*2,life:1.0,trail:[]});
-  } else if(mode==='beta+') {
-    const np=protons.pop(); np.type='neutron'; neutrons.push(np);
-    const ex=cx+Math.cos(ang)*(nucR()+5), ey=cy+Math.sin(ang)*(nucR()+5);
-    ejected.push({type:'positron',label:'e⁺',particles:[{x:ex,y:ey}],cx:ex,cy:ey,vx:Math.cos(ang)*spd*2,vy:Math.sin(ang)*spd*2,life:1.0,trail:[]});
-  } else if(mode==='ec') {
-    const np=protons.pop(); np.type='neutron'; neutrons.push(np);
-    ejected.push({type:'neutrino',label:'ν',particles:[{x:cx,y:cy}],cx:cx,cy:cy,vx:Math.cos(ang)*spd*3,vy:Math.sin(ang)*spd*3,life:0.8,trail:[]});
-  } else if(mode==='gamma') {
-    ejected.push({type:'gamma',label:'γ',ang,cx:cx,cy:cy,vx:Math.cos(ang)*spd*2.5,vy:Math.sin(ang)*spd*2.5,life:1.0,t:0,particles:[]});
-  } else if(mode==='sf') {
-    const hp=Math.floor(Z/2), hn=Math.floor(N/2), g1=[], g2=[];
-    for(let i=0;i<hp;i++) g1.push(protons.pop()); for(let i=0;i<hn;i++) g1.push(neutrons.pop());
-    while(protons.length) g2.push(protons.pop()); while(neutrons.length) g2.push(neutrons.pop());
-    ejected.push({type:'fission',label:'F1',particles:g1,cx,cy,vx:Math.cos(ang)*spd*1.8,vy:Math.sin(ang)*spd*1.8,life:1.0,trail:[]});
-    ejected.push({type:'fission',label:'F2',particles:g2,cx,cy,vx:Math.cos(ang+Math.PI)*spd*1.8,vy:Math.sin(ang+Math.PI)*spd*1.8,life:1.0,trail:[]});
+    ejected.push({type:'alpha',label:'α',particles:grp,cx,cy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:1.0});
+  } else if(mode==='beta-'){
+    const np=neutrons.pop();np.type='proton';protons.push(np);
+    ejected.push({type:'electron',cx,cy,vx:Math.cos(ang)*spd*2,vy:Math.sin(ang)*spd*2,life:1.0,particles:[]});
+  } else if(mode==='beta+'){
+    const np=protons.pop();np.type='neutron';neutrons.push(np);
+    ejected.push({type:'positron',cx,cy,vx:Math.cos(ang)*spd*2,vy:Math.sin(ang)*spd*2,life:1.0,particles:[]});
+  } else if(mode==='ec'){
+    const np=protons.pop();np.type='neutron';neutrons.push(np);
+    ejected.push({type:'neutrino',cx,cy,vx:Math.cos(ang)*spd*3,vy:Math.sin(ang)*spd*3,life:0.8,particles:[]});
+  } else if(mode==='gamma'){
+    ejected.push({type:'gamma',cx,cy,vx:Math.cos(ang)*spd*2.5,vy:Math.sin(ang)*spd*2.5,life:1.0,particles:[]});
+  } else if(mode==='sf'){
+    const hp=Math.floor(Z/2),hn=Math.floor(N/2),g1=[],g2=[];
+    for(let i=0;i<hp;i++) g1.push(protons.pop());for(let i=0;i<hn;i++) g1.push(neutrons.pop());
+    while(protons.length) g2.push(protons.pop());while(neutrons.length) g2.push(neutrons.pop());
+    ejected.push({type:'fission',particles:g1,cx,cy,vx:Math.cos(ang)*spd*1.8,vy:Math.sin(ang)*spd*1.8,life:1.0});
+    ejected.push({type:'fission',particles:g2,cx,cy,vx:Math.cos(ang+Math.PI)*spd*1.8,vy:Math.sin(ang+Math.PI)*spd*1.8,life:1.0});
   }
+  document.getElementById('logbar').textContent=`${DICT[L].modes[mode]}: ${before} → ${elLabel(protons.length,neutrons.length)}`;
   updateUI();
 }
 
-const DINFO = { 'alpha':{cls:'da'}, 'beta-':{cls:'db'}, 'beta+':{cls:'dbp'}, 'ec':{cls:'dec'}, 'gamma':{cls:'dg'}, 'sf':{cls:'dsf'} };
+const DINFO={'alpha':{cls:'da'},'beta-':{cls:'db'},'beta+':{cls:'dbp'},'ec':{cls:'dec'},'gamma':{cls:'dg'},'sf':{cls:'dsf'}};
 
-function updateUI() {
-  const Z=protons.length, N=neutrons.length, ib=document.getElementById('infobar'), db=document.getElementById('decaybar');
-  const d = DICTIONARY[L];
-  if(Z===0&&N===0) { ib.innerHTML=`<span style="font-size:11px;color:var(--color-text-tertiary)">${d.startInfo}</span>`; db.innerHTML=''; return; }
-  const stab=getStability(Z,N), el=Z>=1&&Z<=118?EL[Z]:null;
+function updateUI(){
+  const Z=protons.length,N=neutrons.length,ib=document.getElementById('infobar'),db=document.getElementById('decaybar');
+  const d=DICT[L];
+  if(Z===0&&N===0){ib.innerHTML=`<span style="color:#9ca3af">${d.startInfo}</span>`;db.innerHTML='';return;}
+  const stab=getStability(Z,N),el=Z>=1&&Z<=118?EL[Z]:null;
   let ih=el?`<span class="pill">${el.s} — ${el.n}</span>`:'';
   ih+=`<span class="pill">Z=${Z} N=${N} A=${Z+N}</span>`;
-  if(stab) {
+  if(stab){
     const bc=stab.st==='stable'?'bs':stab.st==='radioactive'?'br':'bu';
-    const stLabel = stab.st==='stable'? d.stable : (stab.st==='radioactive'? d.radioactive : d.unstable);
-    ih+=`<span class="${bc}">${stLabel}</span> <span style="font-size:10px;color:var(--color-text-secondary)">${stab.why}</span>`;
+    ih+=`<span class="${bc}">${stab.st==='stable'?d.stable:(stab.st==='radioactive'?d.radioactive:d.unstable)}</span>`;
+    ih+=`<span style="font-size:11px;color:#6b7280;margin-left:4px">${stab.why}</span>`;
   }
   ib.innerHTML=ih;
   let dh='';
-  if(stab&&stab.modes) {
-    stab.modes.forEach(m=>{ if(DINFO[m]) dh+=`<button class="dbtn ${DINFO[m].cls}" onclick="doDecay('${m}')">${d.modes[m]}</button>`; });
+  if(stab&&stab.modes&&stab.modes.length){
+    stab.modes.forEach(m=>{if(DINFO[m]) dh+=`<button class="dbtn ${DINFO[m].cls}" onclick="doDecay('${m}')">${d.modes[m]}</button>`;});
     dh+=`<button class="dbtn dg" onclick="doDecay('gamma')" style="opacity:0.6">${d.modes.gamma}</button>`;
   }
   db.innerHTML=dh;
 }
 
-function physicsStep() {
-  const cx=cv.width/2, cy=cv.height/2, r=nucR(), all=[...protons,...neutrons];
-  for(let p of all) {
-    const dx=p.x-cx, dy=p.y-cy; p.vx-=dx*0.014; p.vy-=dy*0.014;
-    for(let q of all) { if(q===p) continue; const ex=p.x-q.x, ey=p.y-q.y, ed=Math.hypot(ex,ey)||.01; if(ed<15) { const f=.65/(ed*ed+.5); p.vx+=(ex/ed)*f*13; p.vy+=(ey/ed)*f*13; } }
-    p.vx*=.83; p.vy*=.83; p.x+=p.vx; p.y+=p.vy;
-    const d2=Math.hypot(p.x-cx,p.y-cy); if(d2>r+7) { const a=Math.atan2(p.y-cy,p.x-cx); p.x=cx+Math.cos(a)*(r+6); p.y=cy+Math.sin(a)*(r+6); p.vx*=-.4; p.vy*=-.4; }
+function physicsStep(){
+  const cx=cv.width/2,cy=cv.height/2,r=nucR(),all=[...protons,...neutrons];
+  for(let p of all){
+    p.vx-=(p.x-cx)*0.014;p.vy-=(p.y-cy)*0.014;
+    for(let q of all){if(q===p)continue;let ex=p.x-q.x,ey=p.y-q.y,ed=Math.hypot(ex,ey)||.01;if(ed<15){let f=.65/(ed*ed+.5);p.vx+=(ex/ed)*f*13;p.vy+=(ey/ed)*f*13;}}
+    p.vx*=.83;p.vy*=.83;p.x+=p.vx;p.y+=p.vy;
+    if(Math.hypot(p.x-cx,p.y-cy)>r+7){let a=Math.atan2(p.y-cy,p.x-cx);p.x=cx+Math.cos(a)*(r+6);p.y=cy+Math.sin(a)*(r+6);p.vx*=-.4;p.vy*=-.4;}
   }
-  for(let e of ejected) { e.cx+=e.vx; e.cy+=e.vy; e.vx*=.985; e.vy*=.985; for(let p of e.particles) { p.x+=e.vx; p.y+=e.vy; } if(e.trail) e.trail.push({x:e.cx,y:e.cy,a:e.life}); if(e.trail&&e.trail.length>18) e.trail.shift(); e.life-=.016; if(e.type==='gamma') e.t+=.12; }
+  for(let e of ejected){
+    e.cx+=e.vx;e.cy+=e.vy;e.vx*=.985;e.vy*=.985;
+    for(let p of e.particles){p.x+=e.vx;p.y+=e.vy;}
+    e.life-=.016;
+  }
   ejected=ejected.filter(e=>e.life>0);
 }
 
-function draw() {
-  const w=cv.width, h=cv.height; ctx2.clearRect(0,0,w,h);
-  const drawN = (p, a) => { ctx2.globalAlpha=a||1; ctx2.beginPath(); ctx2.arc(p.x,p.y,7,0,Math.PI*2); ctx2.fillStyle=p.type==='proton'?'#378ADD':'#639922'; ctx2.fill(); ctx2.fillStyle='#fff'; ctx2.font='bold 6px sans-serif'; ctx2.textAlign='center'; ctx2.fillText(p.type==='proton'?'p':'n',p.x,p.y+2); ctx2.globalAlpha=1; };
-  protons.forEach(p=>drawN(p)); neutrons.forEach(n=>drawN(n));
+function draw(){
+  ctx2.clearRect(0,0,cv.width,cv.height);
+  const drawN=(p,a=1)=>{
+    ctx2.globalAlpha=a;ctx2.beginPath();ctx2.arc(p.x,p.y,7,0,Math.PI*2);
+    ctx2.fillStyle=p.type==='proton'?'#3b82f6':'#22c55e';ctx2.fill();
+    ctx2.fillStyle='#fff';ctx2.font='bold 7px sans-serif';ctx2.textAlign='center';
+    ctx2.fillText(p.type==='proton'?'p':'n',p.x,p.y+2.5);ctx2.globalAlpha=1;
+  };
+  protons.forEach(p=>drawN(p));neutrons.forEach(n=>drawN(n));
   ejected.forEach(e=>{
-    ctx2.globalAlpha=e.life;
-    if(e.type==='alpha') e.particles.forEach(p=>drawN(p, e.life));
-    else if(e.type==='gamma') { ctx2.beginPath(); ctx2.strokeStyle='#555'; ctx2.moveTo(e.cx,e.cy); ctx2.lineTo(e.cx+e.vx*10, e.cy+e.vy*10); ctx2.stroke(); }
-    else { ctx2.beginPath(); ctx2.arc(e.cx,e.cy,4,0,Math.PI*2); ctx2.fillStyle='#444'; ctx2.fill(); }
-    ctx2.globalAlpha=1;
+    if(e.type==='alpha'||e.type==='fission') e.particles.forEach(p=>drawN(p,e.life));
+    else if(e.type==='gamma'){ctx2.beginPath();ctx2.strokeStyle='#94a3b8';ctx2.lineWidth=2;ctx2.moveTo(e.cx,e.cy);ctx2.lineTo(e.cx+e.vx*8,e.cy+e.vy*8);ctx2.stroke();}
+    else{ctx2.beginPath();ctx2.arc(e.cx,e.cy,4,0,Math.PI*2);ctx2.fillStyle='#475569';ctx2.fill();}
   });
 }
 
-function animate() { physicsStep(); draw(); raf=requestAnimationFrame(animate); }
+function animate(){physicsStep();draw();raf=requestAnimationFrame(animate);}
+
+function setLang(lang){
+  L=lang;const d=DICT[L];
+  document.getElementById('btnP').innerHTML=`<span class="dot dp"></span>${d.addP}`;
+  document.getElementById('btnN').innerHTML=`<span class="dot dn"></span>${d.addN}`;
+  document.getElementById('btnRP').innerText=d.remP;
+  document.getElementById('btnRN').innerText=d.remN;
+  document.getElementById('btnRes').innerText=d.reset;
+  document.getElementById('empty').innerHTML=d.empty;
+  updateUI();
+}
+
 setLang('tr');
 resize();
 </script>

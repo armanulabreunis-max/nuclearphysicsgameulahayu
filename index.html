@@ -53,6 +53,8 @@
     <select class="lang-select" onchange="setLang(this.value)">
         <option value="tr">TR</option>
         <option value="de">DE</option>
+        <option value="en">EN</option>
+        
     </select>
     <button class="btn" onclick="addP('proton')" id="btnP"><span class="dot dp"></span>Proton ekle</button>
     <button class="btn" onclick="addP('neutron')" id="btnN"><span class="dot dn"></span>Nötron ekle</button>
@@ -114,19 +116,19 @@ const DICTIONARY = {
         addP: "Add a proton", addN: "Add a neutron", remP: "− Proton", remN: "− Neutron", reset: "Zurücksetzen",
         empty: "Kern wird hier erscheinen<br><span style='font-size:11px'>p = Proton (blau) · n = Neutron (grün)</span>",
         startInfo: "Add a proton or a neutron", stable: "Stable", unstable: "Unstable", radioactive: "Radioactive",
-        modes: { alpha: "α-Zerfall", "beta-": "β⁻-Zerfall", "beta+": "β⁺-Zerfall", ec: "E-Einfang", gamma: "γ-Zerfall", sf: "Fission" },
+        modes: { alpha: "α-decay", "beta-": "β⁻-decay", "beta+": "β⁺-decay", ec: "E-catch", gamma: "γ-decay", sf: "Fission" },
         whys: {
-            noP: "Kein Proton — kein Element",
-            unknown: "Unbekanntes Element (Z > 118)",
-            radioactiveAll: "Alle Isotope sind radioaktiv",
-            actinide: "Aktinid — schwer radioaktiv",
-            natural: "Z ≥ 84 — natürlich radioaktiv",
-            longLived: "Sehr langlebig radioaktiv",
-            stableIso: "Stabiles Isotop",
-            nExcess: "Neutronenüberschuss",
-            pExcess: "Protonenüberschuss",
-            gap: "Lücke im N-Band",
-            noStable: "Kein stabiles Isotop"
+            noP: "No Proton — No Element",
+            unknown: "Unknown Element (Z > 118)",
+            radioactiveAll: All isotopes are radioactive",
+            actinide: "Actinide — heavily radioactive",
+            natural: "Z ≥ 84 — naturally radioactive",
+            longLived: "The radioactive isotope that lives long",
+            stableIso: "Stable Isotope",
+            nExcess: "Neutron excess",
+            pExcess: "Proton excess",
+            gap: "Gap in N tape",
+            noStable: "Unstable Isotope"
         }
     }
 };
